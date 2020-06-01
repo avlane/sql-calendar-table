@@ -7,3 +7,5 @@ Works on SQL Server 2016 and later. A SQL Server 2022 variant using `GENERATE_SE
 ## Files
 
 - `01_create_calendar.sql` creates the `CalendarDemo` database and the `dbo.Calendar` table.
+- `02_populate_recursive.sql` loads 2000 to 2049 with a recursive CTE.
+- `03_names_and_quarters.sql` adds names, quarter and month boundaries.

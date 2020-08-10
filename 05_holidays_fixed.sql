@@ -50,3 +50,21 @@ WHERE CalMonth = 10 AND DayOfWeekNo = 1 AND (CalDay - 1) / 7 + 1 = 2;
 UPDATE dbo.Calendar SET IsHoliday = 1, HolidayName = 'Thanksgiving'
 WHERE CalMonth = 11 AND DayOfWeekNo = 4 AND (CalDay - 1) / 7 + 1 = 4;
 GO
+
+
+-- Observed holiday: Saturday moves to Friday, Sunday moves to Monday.
+IF COL_LENGTH(N'dbo.Calendar', N'IsHolidayObserved') IS NULL
+    ALTER TABLE dbo.Calendar ADD IsHolidayObserved BIT NULL;
+GO
+
+UPDATE dbo.Calendar SET IsHolidayObserved = 0;
+
+UPDATE c
+SET c.IsHolidayObserved = 1
+FROM dbo.Calendar AS c
+WHERE (c.IsHoliday = 1 AND c.IsWeekend = 0)
+   OR EXISTS (SELECT 1 FROM dbo.Calendar AS h
+              WHERE h.IsHoliday = 1 AND h.IsWeekend = 1
+                AND c.CalendarDate = CASE WHEN h.DayOfWeekNo = 6 THEN DATEADD(DAY, -1, h.CalendarDate)
+                                          ELSE DATEADD(DAY, 1, h.CalendarDate) END);
+GO

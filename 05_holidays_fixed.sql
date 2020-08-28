@@ -38,7 +38,7 @@ WHERE CalMonth = 2 AND DayOfWeekNo = 1 AND (CalDay - 1) / 7 + 1 = 3;
 
 -- Memorial Day: last Monday in May
 UPDATE dbo.Calendar SET IsHoliday = 1, HolidayName = 'Memorial Day'
-WHERE CalMonth = 5 AND DayOfWeekNo = 1 AND CalDay > 24;
+WHERE CalMonth = 5 AND DayOfWeekNo = 1 AND CalDay >= 25;   -- last Monday has day 25..31
 
 UPDATE dbo.Calendar SET IsHoliday = 1, HolidayName = 'Labor Day'
 WHERE CalMonth = 9 AND DayOfWeekNo = 1 AND CalDay <= 7;

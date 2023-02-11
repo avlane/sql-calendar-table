@@ -3,6 +3,7 @@ GO
 
 
 -- SQL Server 2022 variant of 03_names_and_quarters.sql. Run after 22_populate_generate_series.sql.
+-- Adds WeekStart (Monday of the ISO week) on top of the columns the 2016 script creates.
 IF COL_LENGTH(N'dbo.Calendar', N'CalQuarter') IS NULL
     ALTER TABLE dbo.Calendar ADD CalQuarter   TINYINT     NULL,
                                  MonthName    VARCHAR(10) NULL,
